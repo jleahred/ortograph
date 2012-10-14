@@ -109,22 +109,46 @@ void  load_from_file(const std::string& file_name, mtk::list<ort::msg::sub_quest
 
     generate__substring__reversible_questions(paragrah_list, list_questions, "b", "v");
     generate__substring__reversible_questions(paragrah_list, list_questions, "B", "V");
+        generate__substring__reversible_questions(paragrah_list, list_questions, "b", "v");
+        generate__substring__reversible_questions(paragrah_list, list_questions, "B", "V");
+        generate__substring__reversible_questions(paragrah_list, list_questions, "b", "v");
+        generate__substring__reversible_questions(paragrah_list, list_questions, "B", "V");
 
-    generate__substring__reversible_questions(paragrah_list, list_questions, "y", "ll");
+    generate__substring__reversible_questions(paragrah_list, list_questions, "ya", "lla");
+    generate__substring__reversible_questions(paragrah_list, list_questions, "ye", "lle");
+    generate__substring__reversible_questions(paragrah_list, list_questions, "yi", "lli");
+    generate__substring__reversible_questions(paragrah_list, list_questions, "yo", "llo");
+    generate__substring__reversible_questions(paragrah_list, list_questions, "yu", "llu");
+    generate__substring__reversible_questions(paragrah_list, list_questions, "Ya", "Lla");
+    generate__substring__reversible_questions(paragrah_list, list_questions, "Ye", "Lle");
+    generate__substring__reversible_questions(paragrah_list, list_questions, "Yi", "Lli");
+    generate__substring__reversible_questions(paragrah_list, list_questions, "Yo", "Llo");
+    generate__substring__reversible_questions(paragrah_list, list_questions, "Yu", "Llu");
 
     generate__substring__reversible_questions(paragrah_list, list_questions, "ge", "je");
     generate__substring__reversible_questions(paragrah_list, list_questions, "gi", "ji");
     generate__substring__reversible_questions(paragrah_list, list_questions, "Ge", "Je");
     generate__substring__reversible_questions(paragrah_list, list_questions, "Gi", "Ji");
+        generate__substring__reversible_questions(paragrah_list, list_questions, "ge", "je");
+        generate__substring__reversible_questions(paragrah_list, list_questions, "gi", "ji");
+        generate__substring__reversible_questions(paragrah_list, list_questions, "Ge", "Je");
+        generate__substring__reversible_questions(paragrah_list, list_questions, "Gi", "Ji");
 
     generate__substring__reversible_questions(paragrah_list, list_questions, "ce", "ze");
     generate__substring__reversible_questions(paragrah_list, list_questions, "ci", "zi");
     generate__substring__reversible_questions(paragrah_list, list_questions, "Ce", "Ze");
     generate__substring__reversible_questions(paragrah_list, list_questions, "Ci", "Zi");
+        generate__substring__reversible_questions(paragrah_list, list_questions, "ce", "ze");
+        generate__substring__reversible_questions(paragrah_list, list_questions, "ci", "zi");
+        generate__substring__reversible_questions(paragrah_list, list_questions, "Ce", "Ze");
+        generate__substring__reversible_questions(paragrah_list, list_questions, "Ci", "Zi");
 
     generate__substring__questions(paragrah_list, list_questions, "mp", "np");
     generate__substring__questions(paragrah_list, list_questions, "mb", "nb");
     generate__substring__questions(paragrah_list, list_questions, "nv", "mv");
+        generate__substring__questions(paragrah_list, list_questions, "mp", "np");
+        generate__substring__questions(paragrah_list, list_questions, "mb", "nb");
+        generate__substring__questions(paragrah_list, list_questions, "nv", "mv");
 
     if(status.tildes)
     {
@@ -192,6 +216,17 @@ void  load_from_file(const std::string& file_name, mtk::list<ort::msg::sub_quest
     generate__substring__questions(paragrah_list, list_questions, "porqué", "por que");
     generate__substring__questions(paragrah_list, list_questions, "porqué", "porque");
     generate__substring__questions(paragrah_list, list_questions, "porqué", "por qué");
+
+    generate__substring__reversible_questions(paragrah_list, list_questions, "ado ", "ao ");
+    generate__substring__reversible_questions(paragrah_list, list_questions, "edo ", "eo ");
+    generate__substring__reversible_questions(paragrah_list, list_questions, "ido ", "io ");
+    generate__substring__reversible_questions(paragrah_list, list_questions, "udo ", "uo ");
+
+    generate__substring__reversible_questions(paragrah_list, list_questions, "él ", "el ");
+    generate__substring__reversible_questions(paragrah_list, list_questions, "Él ", "El ");
+
+    generate__substring__reversible_questions(paragrah_list, list_questions, "sí ", "si ");
+    generate__substring__reversible_questions(paragrah_list, list_questions, "Sí ", "Si ");
 }
 
 
