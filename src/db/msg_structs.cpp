@@ -418,8 +418,8 @@ void sub_question::before_send(void) const
 
 
 
-sub_status::sub_status (   const mtk::DateTime&  _started,   const int&  _repetitions,   const int&  _penalizations,   const int&  _options_per_question,   const int&  _failed,   const bool&  _tildes,   const int&  _pendings)
-    :     started(_started),   repetitions(_repetitions),   penalizations(_penalizations),   options_per_question(_options_per_question),   failed(_failed),   tildes(_tildes),   pendings(_pendings) 
+sub_status::sub_status (   const mtk::DateTime&  _started,   const int&  _repetitions,   const int&  _penalizations,   const int&  _options_per_question,   const int&  _failed,   const bool&  _tildes,   const bool&  _english,   const int&  _pendings)
+    :     started(_started),   repetitions(_repetitions),   penalizations(_penalizations),   options_per_question(_options_per_question),   failed(_failed),   tildes(_tildes),   english(_english),   pendings(_pendings) 
        
     {  
     }
@@ -452,7 +452,7 @@ sub_question__qpid_map::sub_question__qpid_map (   const std::string&  _question
 
     //    generate_class_qpid_variant_in_impl
     
-sub_status__qpid_map::sub_status__qpid_map (   const mtk::DateTime&  _started,   const int&  _repetitions,   const int&  _penalizations,   const int&  _options_per_question,   const int&  _failed,   const bool&  _tildes,   const int&  _pendings)
+sub_status__qpid_map::sub_status__qpid_map (   const mtk::DateTime&  _started,   const int&  _repetitions,   const int&  _penalizations,   const int&  _options_per_question,   const int&  _failed,   const bool&  _tildes,   const bool&  _english,   const int&  _pendings)
       :  m_static( 
    _started,
    _repetitions,
@@ -460,6 +460,7 @@ sub_status__qpid_map::sub_status__qpid_map (   const mtk::DateTime&  _started,  
    _options_per_question,
    _failed,
    _tildes,
+   _english,
    _pendings) 
     {  
     }
@@ -504,7 +505,7 @@ std::ostream& operator<< (std::ostream& o, const sub_status & c)
 {
     o << "{ "
 
-        << "started:"<<   c.started << "  "        << "repetitions:"<< c.repetitions<<"  "        << "penalizations:"<< c.penalizations<<"  "        << "options_per_question:"<< c.options_per_question<<"  "        << "failed:"<< c.failed<<"  "        << "tildes:"<< c.tildes<<"  "        << "pendings:"<< c.pendings<<"  "
+        << "started:"<<   c.started << "  "        << "repetitions:"<< c.repetitions<<"  "        << "penalizations:"<< c.penalizations<<"  "        << "options_per_question:"<< c.options_per_question<<"  "        << "failed:"<< c.failed<<"  "        << "tildes:"<< c.tildes<<"  "        << "english:"<< c.english<<"  "        << "pendings:"<< c.pendings<<"  "
         << " }";
     return o;
 };
@@ -515,7 +516,7 @@ YAML::Emitter& operator << (YAML::Emitter& o, const sub_status & c)
 {
     o << YAML::BeginMap
 
-        << YAML::Key << "started"  << YAML::Value <<   c.started        << YAML::Key << "repetitions"  << YAML::Value << c.repetitions        << YAML::Key << "penalizations"  << YAML::Value << c.penalizations        << YAML::Key << "options_per_question"  << YAML::Value << c.options_per_question        << YAML::Key << "failed"  << YAML::Value << c.failed        << YAML::Key << "tildes"  << YAML::Value << c.tildes        << YAML::Key << "pendings"  << YAML::Value << c.pendings
+        << YAML::Key << "started"  << YAML::Value <<   c.started        << YAML::Key << "repetitions"  << YAML::Value << c.repetitions        << YAML::Key << "penalizations"  << YAML::Value << c.penalizations        << YAML::Key << "options_per_question"  << YAML::Value << c.options_per_question        << YAML::Key << "failed"  << YAML::Value << c.failed        << YAML::Key << "tildes"  << YAML::Value << c.tildes        << YAML::Key << "english"  << YAML::Value << c.english        << YAML::Key << "pendings"  << YAML::Value << c.pendings
         << YAML::EndMap;
     return o;
 };
@@ -532,6 +533,7 @@ void  operator >> (const YAML::Node& node, sub_status & c)
         node["options_per_question"]  >> c.options_per_question;
         node["failed"]  >> c.failed;
         node["tildes"]  >> c.tildes;
+        node["english"]  >> c.english;
         node["pendings"]  >> c.pendings;
 
 
@@ -552,7 +554,7 @@ bool operator!= (const sub_question& a, const sub_question& b)
 
 bool operator== (const sub_status& a, const sub_status& b)
 {
-    return (          a.started ==  b.started  &&          a.repetitions ==  b.repetitions  &&          a.penalizations ==  b.penalizations  &&          a.options_per_question ==  b.options_per_question  &&          a.failed ==  b.failed  &&          a.tildes ==  b.tildes  &&          a.pendings ==  b.pendings  &&   true  );
+    return (          a.started ==  b.started  &&          a.repetitions ==  b.repetitions  &&          a.penalizations ==  b.penalizations  &&          a.options_per_question ==  b.options_per_question  &&          a.failed ==  b.failed  &&          a.tildes ==  b.tildes  &&          a.english ==  b.english  &&          a.pendings ==  b.pendings  &&   true  );
 };
 
 bool operator!= (const sub_status& a, const sub_status& b)
@@ -701,6 +703,14 @@ void  copy (sub_status& c, const qpid::types::Variant& v)
                         //__internal_qpid_fill(c.tildes, it->second.asMap());
 //   sub_msg_type
 
+                    it = mv.find("e");
+                    if (it== mv.end())
+                        throw mtk::Alarm(MTK_HERE, "msg_build", "missing mandatory field english on message sub_status::__internal_qpid_fill", mtk::alPriorCritic);
+                    else
+                        copy(c.english, it->second);
+                        //__internal_qpid_fill(c.english, it->second.asMap());
+//   sub_msg_type
+
                     it = mv.find("p");
                     if (it== mv.end())
                         throw mtk::Alarm(MTK_HERE, "msg_build", "missing mandatory field pendings on message sub_status::__internal_qpid_fill", mtk::alPriorCritic);
@@ -736,6 +746,8 @@ void __internal_add2map (qpid::types::Variant::Map& map, const sub_status& a)
         __internal_add2map(map, a.failed, std::string("f"));
 //  sub_msg_type
         __internal_add2map(map, a.tildes, std::string("t"));
+//  sub_msg_type
+        __internal_add2map(map, a.english, std::string("e"));
 //  sub_msg_type
         __internal_add2map(map, a.pendings, std::string("p"));
 
@@ -798,6 +810,8 @@ void __internal_add2map (qpid::types::Variant::Map& map, const mtk::nullable<sub
 //   sub_msg_type
    __internal_get_default((bool*)0),
 //   sub_msg_type
+   __internal_get_default((bool*)0),
+//   sub_msg_type
    __internal_get_default((int*)0)
             );
     }
@@ -834,6 +848,8 @@ sub_status::sub_status (const qpid::types::Variant::Map&  mv)
    failed(__internal_get_default((int*)0)),
 //   sub_msg_type
    tildes(__internal_get_default((bool*)0)),
+//   sub_msg_type
+   english(__internal_get_default((bool*)0)),
 //   sub_msg_type
    pendings(__internal_get_default((int*)0)) 
     {

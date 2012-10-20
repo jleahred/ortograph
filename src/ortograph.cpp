@@ -54,7 +54,14 @@ void ortograph::on_pb_start_clicked()
 void  ortograph::start_game(void)
 {
     ui->lbl_status->setText("");
-    status = ort::msg::sub_status(mtk::dtNowLocal(), ui->sb_repetitions->value(), ui->sb_penalizations->value(), ui->sb_options->value(), 0, ui->cb_tildes->isChecked(), ui->sb_repetitions->value());
+    status = ort::msg::sub_status(  mtk::dtNowLocal(),
+                                    ui->sb_repetitions->value(),
+                                    ui->sb_penalizations->value(),
+                                    ui->sb_options->value(),
+                                    0,
+                                    ui->cb_tildes->isChecked(),
+                                    ui->cb_english->isChecked(),
+                                    ui->sb_repetitions->value());
     if(load_questions())
         ask_random_question();
 }
@@ -91,6 +98,19 @@ void generate__substring__reversible_questions(mtk::list<std::string>  paragrah_
 }
 
 
+void generate__substring__reversible_questions_list(mtk::list<std::string>  paragrah_list, mtk::list<ort::msg::sub_question>&  list_questions, mtk::list<std::string> list2propose)
+{
+    while(list2propose.size())
+    {
+        std::string first = list2propose.front();
+        list2propose.pop_front();
+
+        for(auto item : list2propose)
+            generate__substring__reversible_questions(paragrah_list, list_questions, first, item);
+    }
+}
+
+
 void  load_from_file(const std::string& file_name, mtk::list<ort::msg::sub_question>&        list_questions, const ort::msg::sub_status& status)
 {
     mtk::list<std::string>  paragrah_list;
@@ -107,126 +127,181 @@ void  load_from_file(const std::string& file_name, mtk::list<ort::msg::sub_quest
         file.close();
     }
 
-    generate__substring__reversible_questions(paragrah_list, list_questions, "b", "v");
-    generate__substring__reversible_questions(paragrah_list, list_questions, "B", "V");
+    if(status.english)
+    {
+        //  prepositions
+        mtk::list<std::string>  list_prepositions;
+
+        list_prepositions.clear();
+        list_prepositions.push_back(" on ");
+        list_prepositions.push_back(" in ");
+        list_prepositions.push_back(" at ");
+        list_prepositions.push_back(" since ");
+        list_prepositions.push_back(" for ");
+        list_prepositions.push_back(" ago ");
+        list_prepositions.push_back(" before ");
+        list_prepositions.push_back(" to ");
+        list_prepositions.push_back(" till ");
+        list_prepositions.push_back(" untill ");
+        list_prepositions.push_back(" by ");
+        generate__substring__reversible_questions_list(paragrah_list, list_questions, list_prepositions);
+
+        list_prepositions.clear();
+        list_prepositions.push_back(" in ");
+        list_prepositions.push_back(" at ");
+        list_prepositions.push_back(" on ");
+        list_prepositions.push_back(" by ");
+        list_prepositions.push_back(" nex to ");
+        list_prepositions.push_back(" beside ");
+        list_prepositions.push_back(" under ");
+        list_prepositions.push_back(" below ");
+        list_prepositions.push_back(" over ");
+        list_prepositions.push_back(" above ");
+        list_prepositions.push_back(" across ");
+        list_prepositions.push_back(" throgh ");
+        list_prepositions.push_back(" to ");
+        list_prepositions.push_back(" into ");
+        list_prepositions.push_back(" towards ");
+        list_prepositions.push_back(" onto ");
+        list_prepositions.push_back(" from ");
+        generate__substring__reversible_questions_list(paragrah_list, list_questions, list_prepositions);
+
+        list_prepositions.clear();
+        list_prepositions.push_back(" from ");
+        list_prepositions.push_back(" of ");
+        list_prepositions.push_back(" by ");
+        list_prepositions.push_back(" on ");
+        list_prepositions.push_back(" in ");
+        list_prepositions.push_back(" off ");
+        list_prepositions.push_back(" out of ");
+        list_prepositions.push_back(" by ");
+        list_prepositions.push_back(" at ");
+        list_prepositions.push_back(" about ");
+        generate__substring__reversible_questions_list(paragrah_list, list_questions, list_prepositions);
+    }
+    else
+    {
         generate__substring__reversible_questions(paragrah_list, list_questions, "b", "v");
         generate__substring__reversible_questions(paragrah_list, list_questions, "B", "V");
-        generate__substring__reversible_questions(paragrah_list, list_questions, "b", "v");
-        generate__substring__reversible_questions(paragrah_list, list_questions, "B", "V");
+            generate__substring__reversible_questions(paragrah_list, list_questions, "b", "v");
+            generate__substring__reversible_questions(paragrah_list, list_questions, "B", "V");
+            generate__substring__reversible_questions(paragrah_list, list_questions, "b", "v");
+            generate__substring__reversible_questions(paragrah_list, list_questions, "B", "V");
 
-    generate__substring__reversible_questions(paragrah_list, list_questions, "ya", "lla");
-    generate__substring__reversible_questions(paragrah_list, list_questions, "ye", "lle");
-    generate__substring__reversible_questions(paragrah_list, list_questions, "yi", "lli");
-    generate__substring__reversible_questions(paragrah_list, list_questions, "yo", "llo");
-    generate__substring__reversible_questions(paragrah_list, list_questions, "yu", "llu");
-    generate__substring__reversible_questions(paragrah_list, list_questions, "Ya", "Lla");
-    generate__substring__reversible_questions(paragrah_list, list_questions, "Ye", "Lle");
-    generate__substring__reversible_questions(paragrah_list, list_questions, "Yi", "Lli");
-    generate__substring__reversible_questions(paragrah_list, list_questions, "Yo", "Llo");
-    generate__substring__reversible_questions(paragrah_list, list_questions, "Yu", "Llu");
+        generate__substring__reversible_questions(paragrah_list, list_questions, "ya", "lla");
+        generate__substring__reversible_questions(paragrah_list, list_questions, "ye", "lle");
+        generate__substring__reversible_questions(paragrah_list, list_questions, "yi", "lli");
+        generate__substring__reversible_questions(paragrah_list, list_questions, "yo", "llo");
+        generate__substring__reversible_questions(paragrah_list, list_questions, "yu", "llu");
+        generate__substring__reversible_questions(paragrah_list, list_questions, "Ya", "Lla");
+        generate__substring__reversible_questions(paragrah_list, list_questions, "Ye", "Lle");
+        generate__substring__reversible_questions(paragrah_list, list_questions, "Yi", "Lli");
+        generate__substring__reversible_questions(paragrah_list, list_questions, "Yo", "Llo");
+        generate__substring__reversible_questions(paragrah_list, list_questions, "Yu", "Llu");
 
-    generate__substring__reversible_questions(paragrah_list, list_questions, "ge", "je");
-    generate__substring__reversible_questions(paragrah_list, list_questions, "gi", "ji");
-    generate__substring__reversible_questions(paragrah_list, list_questions, "Ge", "Je");
-    generate__substring__reversible_questions(paragrah_list, list_questions, "Gi", "Ji");
         generate__substring__reversible_questions(paragrah_list, list_questions, "ge", "je");
         generate__substring__reversible_questions(paragrah_list, list_questions, "gi", "ji");
         generate__substring__reversible_questions(paragrah_list, list_questions, "Ge", "Je");
         generate__substring__reversible_questions(paragrah_list, list_questions, "Gi", "Ji");
+            generate__substring__reversible_questions(paragrah_list, list_questions, "ge", "je");
+            generate__substring__reversible_questions(paragrah_list, list_questions, "gi", "ji");
+            generate__substring__reversible_questions(paragrah_list, list_questions, "Ge", "Je");
+            generate__substring__reversible_questions(paragrah_list, list_questions, "Gi", "Ji");
 
-    generate__substring__reversible_questions(paragrah_list, list_questions, "ce", "ze");
-    generate__substring__reversible_questions(paragrah_list, list_questions, "ci", "zi");
-    generate__substring__reversible_questions(paragrah_list, list_questions, "Ce", "Ze");
-    generate__substring__reversible_questions(paragrah_list, list_questions, "Ci", "Zi");
         generate__substring__reversible_questions(paragrah_list, list_questions, "ce", "ze");
         generate__substring__reversible_questions(paragrah_list, list_questions, "ci", "zi");
         generate__substring__reversible_questions(paragrah_list, list_questions, "Ce", "Ze");
         generate__substring__reversible_questions(paragrah_list, list_questions, "Ci", "Zi");
+            generate__substring__reversible_questions(paragrah_list, list_questions, "ce", "ze");
+            generate__substring__reversible_questions(paragrah_list, list_questions, "ci", "zi");
+            generate__substring__reversible_questions(paragrah_list, list_questions, "Ce", "Ze");
+            generate__substring__reversible_questions(paragrah_list, list_questions, "Ci", "Zi");
 
-    generate__substring__questions(paragrah_list, list_questions, "mp", "np");
-    generate__substring__questions(paragrah_list, list_questions, "mb", "nb");
-    generate__substring__questions(paragrah_list, list_questions, "nv", "mv");
         generate__substring__questions(paragrah_list, list_questions, "mp", "np");
         generate__substring__questions(paragrah_list, list_questions, "mb", "nb");
         generate__substring__questions(paragrah_list, list_questions, "nv", "mv");
+            generate__substring__questions(paragrah_list, list_questions, "mp", "np");
+            generate__substring__questions(paragrah_list, list_questions, "mb", "nb");
+            generate__substring__questions(paragrah_list, list_questions, "nv", "mv");
 
-    if(status.tildes)
-    {
-        generate__substring__reversible_questions(paragrah_list, list_questions, "á", "a");
-        generate__substring__reversible_questions(paragrah_list, list_questions, "é", "e");
-        generate__substring__reversible_questions(paragrah_list, list_questions, "í", "i");
-        generate__substring__reversible_questions(paragrah_list, list_questions, "ó", "o");
-        generate__substring__reversible_questions(paragrah_list, list_questions, "ú", "u");
+        if(status.tildes)
+        {
+            generate__substring__reversible_questions(paragrah_list, list_questions, "á", "a");
+            generate__substring__reversible_questions(paragrah_list, list_questions, "é", "e");
+            generate__substring__reversible_questions(paragrah_list, list_questions, "í", "i");
+            generate__substring__reversible_questions(paragrah_list, list_questions, "ó", "o");
+            generate__substring__reversible_questions(paragrah_list, list_questions, "ú", "u");
+        }
+
+        generate__substring__questions(paragrah_list, list_questions, "x", "s");
+        generate__substring__questions(paragrah_list, list_questions, "X", "S");
+        generate__substring__questions(paragrah_list, list_questions, "sa", "xa");
+        generate__substring__questions(paragrah_list, list_questions, "se", "xe");
+        generate__substring__questions(paragrah_list, list_questions, "si", "xi");
+        generate__substring__questions(paragrah_list, list_questions, "so", "xo");
+        generate__substring__questions(paragrah_list, list_questions, "su", "xu");
+        generate__substring__questions(paragrah_list, list_questions, "Sa", "Xa");
+        generate__substring__questions(paragrah_list, list_questions, "Se", "Xe");
+        generate__substring__questions(paragrah_list, list_questions, "Si", "Xi");
+        generate__substring__questions(paragrah_list, list_questions, "So", "Xo");
+        generate__substring__questions(paragrah_list, list_questions, "Su", "Xu");
+
+        generate__substring__questions(paragrah_list, list_questions, "h", "_");
+        generate__substring__questions(paragrah_list, list_questions, " a", " ha");
+        generate__substring__questions(paragrah_list, list_questions, " e", " he");
+        generate__substring__questions(paragrah_list, list_questions, " i", " hi");
+        generate__substring__questions(paragrah_list, list_questions, " o", " ho");
+        generate__substring__reversible_questions(paragrah_list, list_questions, "aa", "aha");
+        generate__substring__reversible_questions(paragrah_list, list_questions, "ae", "ahe");
+        generate__substring__reversible_questions(paragrah_list, list_questions, "ai", "ahi");
+        generate__substring__reversible_questions(paragrah_list, list_questions, "ao", "aho");
+        generate__substring__reversible_questions(paragrah_list, list_questions, "au", "ahu");
+        generate__substring__reversible_questions(paragrah_list, list_questions, "ea", "eha");
+        generate__substring__reversible_questions(paragrah_list, list_questions, "ee", "ehe");
+        generate__substring__reversible_questions(paragrah_list, list_questions, "ei", "ehi");
+        generate__substring__reversible_questions(paragrah_list, list_questions, "eo", "eho");
+        generate__substring__reversible_questions(paragrah_list, list_questions, "eu", "ehu");
+        generate__substring__reversible_questions(paragrah_list, list_questions, "ia", "iha");
+        generate__substring__reversible_questions(paragrah_list, list_questions, "ie", "ihe");
+        generate__substring__reversible_questions(paragrah_list, list_questions, "ii", "ihi");
+        generate__substring__reversible_questions(paragrah_list, list_questions, "io", "iho");
+        generate__substring__reversible_questions(paragrah_list, list_questions, "iu", "ihu");
+        generate__substring__reversible_questions(paragrah_list, list_questions, "oa", "oha");
+        generate__substring__reversible_questions(paragrah_list, list_questions, "oe", "ohe");
+        generate__substring__reversible_questions(paragrah_list, list_questions, "oi", "ohi");
+        generate__substring__reversible_questions(paragrah_list, list_questions, "oo", "oho");
+        generate__substring__reversible_questions(paragrah_list, list_questions, "ou", "ohu");
+        generate__substring__reversible_questions(paragrah_list, list_questions, "ua", "uha");
+        generate__substring__reversible_questions(paragrah_list, list_questions, "ue", "uhe");
+        generate__substring__reversible_questions(paragrah_list, list_questions, "ui", "uhi");
+        generate__substring__reversible_questions(paragrah_list, list_questions, "uo", "uho");
+        generate__substring__reversible_questions(paragrah_list, list_questions, "uu", "uhu");
+
+        generate__substring__reversible_questions(paragrah_list, list_questions, "cómo", "como");
+        generate__substring__questions(paragrah_list, list_questions, "porque", "por que");
+        generate__substring__questions(paragrah_list, list_questions, "porque", "porqué");
+        generate__substring__questions(paragrah_list, list_questions, "porque", "por qué");
+        generate__substring__questions(paragrah_list, list_questions, "por que", "porque");
+        generate__substring__questions(paragrah_list, list_questions, "por que", "porqué");
+        generate__substring__questions(paragrah_list, list_questions, "por que", "por qué");
+        generate__substring__questions(paragrah_list, list_questions, "por qué", "porque");
+        generate__substring__questions(paragrah_list, list_questions, "por qué", "porqué");
+        generate__substring__questions(paragrah_list, list_questions, "por qué", "por que");
+        generate__substring__questions(paragrah_list, list_questions, "porqué", "por que");
+        generate__substring__questions(paragrah_list, list_questions, "porqué", "porque");
+        generate__substring__questions(paragrah_list, list_questions, "porqué", "por qué");
+
+        generate__substring__reversible_questions(paragrah_list, list_questions, "ado ", "ao ");
+        generate__substring__reversible_questions(paragrah_list, list_questions, "edo ", "eo ");
+        generate__substring__reversible_questions(paragrah_list, list_questions, "ido ", "io ");
+        generate__substring__reversible_questions(paragrah_list, list_questions, "udo ", "uo ");
+
+        generate__substring__reversible_questions(paragrah_list, list_questions, "él ", "el ");
+        generate__substring__reversible_questions(paragrah_list, list_questions, "Él ", "El ");
+
+        generate__substring__reversible_questions(paragrah_list, list_questions, "sí ", "si ");
+        generate__substring__reversible_questions(paragrah_list, list_questions, "Sí ", "Si ");
     }
-
-    generate__substring__questions(paragrah_list, list_questions, "x", "s");
-    generate__substring__questions(paragrah_list, list_questions, "X", "S");
-    generate__substring__questions(paragrah_list, list_questions, "sa", "xa");
-    generate__substring__questions(paragrah_list, list_questions, "se", "xe");
-    generate__substring__questions(paragrah_list, list_questions, "si", "xi");
-    generate__substring__questions(paragrah_list, list_questions, "so", "xo");
-    generate__substring__questions(paragrah_list, list_questions, "su", "xu");
-    generate__substring__questions(paragrah_list, list_questions, "Sa", "Xa");
-    generate__substring__questions(paragrah_list, list_questions, "Se", "Xe");
-    generate__substring__questions(paragrah_list, list_questions, "Si", "Xi");
-    generate__substring__questions(paragrah_list, list_questions, "So", "Xo");
-    generate__substring__questions(paragrah_list, list_questions, "Su", "Xu");
-
-    generate__substring__questions(paragrah_list, list_questions, "h", "_");
-    generate__substring__questions(paragrah_list, list_questions, " a", " ha");
-    generate__substring__questions(paragrah_list, list_questions, " e", " he");
-    generate__substring__questions(paragrah_list, list_questions, " i", " hi");
-    generate__substring__questions(paragrah_list, list_questions, " o", " ho");
-    generate__substring__reversible_questions(paragrah_list, list_questions, "aa", "aha");
-    generate__substring__reversible_questions(paragrah_list, list_questions, "ae", "ahe");
-    generate__substring__reversible_questions(paragrah_list, list_questions, "ai", "ahi");
-    generate__substring__reversible_questions(paragrah_list, list_questions, "ao", "aho");
-    generate__substring__reversible_questions(paragrah_list, list_questions, "au", "ahu");
-    generate__substring__reversible_questions(paragrah_list, list_questions, "ea", "eha");
-    generate__substring__reversible_questions(paragrah_list, list_questions, "ee", "ehe");
-    generate__substring__reversible_questions(paragrah_list, list_questions, "ei", "ehi");
-    generate__substring__reversible_questions(paragrah_list, list_questions, "eo", "eho");
-    generate__substring__reversible_questions(paragrah_list, list_questions, "eu", "ehu");
-    generate__substring__reversible_questions(paragrah_list, list_questions, "ia", "iha");
-    generate__substring__reversible_questions(paragrah_list, list_questions, "ie", "ihe");
-    generate__substring__reversible_questions(paragrah_list, list_questions, "ii", "ihi");
-    generate__substring__reversible_questions(paragrah_list, list_questions, "io", "iho");
-    generate__substring__reversible_questions(paragrah_list, list_questions, "iu", "ihu");
-    generate__substring__reversible_questions(paragrah_list, list_questions, "oa", "oha");
-    generate__substring__reversible_questions(paragrah_list, list_questions, "oe", "ohe");
-    generate__substring__reversible_questions(paragrah_list, list_questions, "oi", "ohi");
-    generate__substring__reversible_questions(paragrah_list, list_questions, "oo", "oho");
-    generate__substring__reversible_questions(paragrah_list, list_questions, "ou", "ohu");
-    generate__substring__reversible_questions(paragrah_list, list_questions, "ua", "uha");
-    generate__substring__reversible_questions(paragrah_list, list_questions, "ue", "uhe");
-    generate__substring__reversible_questions(paragrah_list, list_questions, "ui", "uhi");
-    generate__substring__reversible_questions(paragrah_list, list_questions, "uo", "uho");
-    generate__substring__reversible_questions(paragrah_list, list_questions, "uu", "uhu");
-
-    generate__substring__reversible_questions(paragrah_list, list_questions, "cómo", "como");
-    generate__substring__questions(paragrah_list, list_questions, "porque", "por que");
-    generate__substring__questions(paragrah_list, list_questions, "porque", "porqué");
-    generate__substring__questions(paragrah_list, list_questions, "porque", "por qué");
-    generate__substring__questions(paragrah_list, list_questions, "por que", "porque");
-    generate__substring__questions(paragrah_list, list_questions, "por que", "porqué");
-    generate__substring__questions(paragrah_list, list_questions, "por que", "por qué");
-    generate__substring__questions(paragrah_list, list_questions, "por qué", "porque");
-    generate__substring__questions(paragrah_list, list_questions, "por qué", "porqué");
-    generate__substring__questions(paragrah_list, list_questions, "por qué", "por que");
-    generate__substring__questions(paragrah_list, list_questions, "porqué", "por que");
-    generate__substring__questions(paragrah_list, list_questions, "porqué", "porque");
-    generate__substring__questions(paragrah_list, list_questions, "porqué", "por qué");
-
-    generate__substring__reversible_questions(paragrah_list, list_questions, "ado ", "ao ");
-    generate__substring__reversible_questions(paragrah_list, list_questions, "edo ", "eo ");
-    generate__substring__reversible_questions(paragrah_list, list_questions, "ido ", "io ");
-    generate__substring__reversible_questions(paragrah_list, list_questions, "udo ", "uo ");
-
-    generate__substring__reversible_questions(paragrah_list, list_questions, "él ", "el ");
-    generate__substring__reversible_questions(paragrah_list, list_questions, "Él ", "El ");
-
-    generate__substring__reversible_questions(paragrah_list, list_questions, "sí ", "si ");
-    generate__substring__reversible_questions(paragrah_list, list_questions, "Sí ", "Si ");
 }
 
 

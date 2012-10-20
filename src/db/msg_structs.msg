@@ -30,6 +30,7 @@ sub_status [< >]
     options_per_question    (opq)   :   int
     failed                  (f)     :   int
     tildes                  (t)     :   bool
+    english                 (e)     :   bool
 
     pendings                (p)     :   int
 }

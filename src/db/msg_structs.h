@@ -111,7 +111,7 @@ public:
 
     
     // constructor
-    explicit sub_status (    const mtk::DateTime&  _started,   const int&  _repetitions,   const int&  _penalizations,   const int&  _options_per_question,   const int&  _failed,   const bool&  _tildes,   const int&  _pendings );
+    explicit sub_status (    const mtk::DateTime&  _started,   const int&  _repetitions,   const int&  _penalizations,   const int&  _options_per_question,   const int&  _failed,   const bool&  _tildes,   const bool&  _english,   const int&  _pendings );
     explicit sub_status ( const qpid::types::Variant::Map&  mv );
     virtual ~sub_status (){};
     virtual std::string get_message_type_as_string       (void) const  { return "sub_status"; }
@@ -133,6 +133,7 @@ public:
     int                                       options_per_question; 
     int                                       failed; 
     bool                                      tildes; 
+    bool                                      english; 
     int                                       pendings; 
 
 
@@ -161,7 +162,7 @@ public:
         public:
             explicit  sub_status__qpid_map ( const qpid::types::Variant::Map&  mv );
             explicit  sub_status__qpid_map ( const sub_status&  c ) : m_static(c) {}
-            explicit  sub_status__qpid_map (    const mtk::DateTime&  _started,   const int&  _repetitions,   const int&  _penalizations,   const int&  _options_per_question,   const int&  _failed,   const bool&  _tildes,   const int&  _pendings );
+            explicit  sub_status__qpid_map (    const mtk::DateTime&  _started,   const int&  _repetitions,   const int&  _penalizations,   const int&  _options_per_question,   const int&  _failed,   const bool&  _tildes,   const bool&  _english,   const int&  _pendings );
             ~sub_status__qpid_map() {};
             
 

@@ -44,6 +44,37 @@ QOption {
        <property name="margin">
         <number>0</number>
        </property>
+       <item row="2" column="1">
+        <widget class="QSpinBox" name="sb_penalizations">
+         <property name="value">
+          <number>1</number>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>Repetitions</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0" colspan="4">
+        <widget class="QTreeView" name="tv_exam"/>
+       </item>
+       <item row="2" column="3">
+        <widget class="QPushButton" name="pb_start">
+         <property name="text">
+          <string>start</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>Options:</string>
+         </property>
+        </widget>
+       </item>
        <item row="1" column="1">
         <widget class="QSpinBox" name="sb_options">
          <property name="maximum">
@@ -67,23 +98,6 @@ QOption {
          </property>
         </spacer>
        </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_3">
-         <property name="text">
-          <string>Options:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0" colspan="4">
-        <widget class="QTreeView" name="tv_exam"/>
-       </item>
-       <item row="2" column="3">
-        <widget class="QPushButton" name="pb_start">
-         <property name="text">
-          <string>start</string>
-         </property>
-        </widget>
-       </item>
        <item row="0" column="1">
         <widget class="QSpinBox" name="sb_repetitions">
          <property name="value">
@@ -98,24 +112,17 @@ QOption {
          </property>
         </widget>
        </item>
-       <item row="2" column="1">
-        <widget class="QSpinBox" name="sb_penalizations">
-         <property name="value">
-          <number>1</number>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>Repetitions</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
+       <item row="0" column="3">
         <widget class="QCheckBox" name="cb_tildes">
          <property name="text">
           <string>tildes</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="3">
+        <widget class="QCheckBox" name="cb_english">
+         <property name="text">
+          <string>english</string>
          </property>
         </widget>
        </item>
